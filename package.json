@@ -1,1 +1,1 @@
-{"name":"astroguide-ai","private":true,"version":"1.0.0","scripts":{"dev":"vercel dev"}}
+{"name":"astroguide-ai","version":"1.0.0","private":true,"dependencies":{"astronomy-engine":"^2.1.19"}}
