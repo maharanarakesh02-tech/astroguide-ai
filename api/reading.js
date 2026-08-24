@@ -1,12 +1,1 @@
-export default async function handler(req,res){
- if(req.method!=="POST") return res.status(405).json({error:"Method not allowed"});
- const {name="friend",topic="Personal growth"}=req.body||{};
- const seed=(name.length*7+topic.length*11)%4;
- const messages=[
- "Your next step becomes clearer when you stop waiting for perfect certainty. Choose one small action and repeat it consistently.",
- "A period of reflection is useful now. Notice recurring opportunities, then commit to the one that aligns with your values.",
- "Your strongest progress comes from patience and structure. Simplify your priorities before taking on something new.",
- "Focus on what you can influence today. Consistent effort and honest self-reflection can reveal your next direction."
- ];
- res.status(200).json({reading:name+", "+messages[seed],disclaimer:"For entertainment and personal reflection only."});
-}
+export default async function handler(req,res){res.setHeader("Access-Control-Allow-Methods","POST,OPTIONS");if(req.method==="OPTIONS")return res.status(200).end();if(req.method!=="POST")return res.status(405).json({error:"Method not allowed"});const {name="",dob="",topic="Personal growth"}=req.body||{};if(!name.trim()||!dob)return res.status(400).json({error:"Name and date of birth are required"});const ageSeed=new Date(dob).getDate()+name.trim().length+topic.length;const insights=["The strongest signal around you is momentum: choose one meaningful step and repeat it consistently instead of waiting for perfect certainty.","A period of simplification can help you see your next direction. Protect your attention and give more energy to what keeps proving valuable.","Your progress may come through patience and structure. Turn a large hope into a small routine you can actually maintain.","Notice the opportunities that keep returning. Reflection is useful, but clarity often grows after you begin moving."];res.status(200).json({reading:name.trim()+", "+insights[ageSeed%insights.length],disclaimer:"For entertainment and personal reflection only."})}
